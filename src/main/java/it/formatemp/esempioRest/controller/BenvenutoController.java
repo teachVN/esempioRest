@@ -11,11 +11,13 @@ public class BenvenutoController {
     //endpoint
     @GetMapping("")
     public String benvenuto(){
+
         return "BENVENUTO";
     }
     //{nome} significa path variable, cioè la parte variabile del path
     @GetMapping("/{nome}")
     public String benvenutoPersonalizzato(@PathVariable String nome){
+
         return "Benvenuto " + nome;
     }
 
