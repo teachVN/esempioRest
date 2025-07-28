@@ -29,4 +29,9 @@ public class StudenteController {
     public List<Studente> getAllStudenti(){
         return studenteService.getAllStudenti();
     }
+
+    @PutMapping("/studenti")
+    public Studente updateStudente(int matricola, Studente studente){
+        return studenteService.updateStudente(matricola, studente);
+    }
 }
