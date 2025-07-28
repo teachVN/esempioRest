@@ -1,5 +1,6 @@
 package it.formatemp.esempioRest.controller;
 
+import it.formatemp.esempioRest.dto.StudenteDto;
 import it.formatemp.esempioRest.model.Studente;
 import it.formatemp.esempioRest.service.StudenteService;
 import it.formatemp.esempioRest.service.StudenteServiceDb;
@@ -17,8 +18,8 @@ public class StudenteController {
     //solitamente il path del PostMapping è una collection uri. Lo studente da salvare si troverà dentro al corpo
     //della richiesta e @RequestBody serve proprio per recuperarlo nel body
     @PostMapping("/studenti")
-    public Studente salvaStudente(@RequestBody Studente studente){
-        return studenteService.salvaStudente(studente);
+    public Studente salvaStudente(@RequestBody StudenteDto studenteDto){
+        return studenteService.salvaStudente(studenteDto);
     }
 
     @GetMapping("/studenti/{matricola}")
@@ -32,8 +33,8 @@ public class StudenteController {
     }
 
     @PutMapping("/studenti/{matricola}")
-    public Studente updateStudente(@PathVariable int matricola, @RequestBody Studente studente){
-        return studenteService.updateStudente(matricola, studente);
+    public Studente updateStudente(@PathVariable int matricola, @RequestBody StudenteDto studenteDto){
+        return studenteService.updateStudente(matricola, studenteDto);
     }
 
     @DeleteMapping("/studenti/{matricola}")

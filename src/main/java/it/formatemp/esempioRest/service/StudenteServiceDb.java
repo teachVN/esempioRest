@@ -1,5 +1,7 @@
 package it.formatemp.esempioRest.service;
 
+import it.formatemp.esempioRest.dto.StudenteDto;
+import it.formatemp.esempioRest.model.Aula;
 import it.formatemp.esempioRest.model.Studente;
 import it.formatemp.esempioRest.repository.StudenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,21 @@ public class StudenteServiceDb {
     @Autowired
     private StudenteRepository studenteRepository;
 
-    public Studente salvaStudente(Studente studente){
-        return studenteRepository.save(studente);
+    @Autowired
+    private AulaService aulaService;
+
+    public Studente salvaStudente(StudenteDto studenteDto){
+
+            Aula aulaDaCercare = aulaService.getAulaById(studenteDto.getAulaId());
+
+            Studente studente = new Studente();
+            studente.setNome(studenteDto.getNome());
+            studente.setCognome(studenteDto.getCognome());
+            studente.setDataNascita(studenteDto.getDataNascita());
+            studente.setAula(aulaDaCercare);
+
+            return studenteRepository.save(studente);
+
     }
 
     public Studente getStudenteByMatricola(int matricola){
@@ -25,12 +40,18 @@ public class StudenteServiceDb {
         return studenteRepository.findAll();
     }
 
-    public Studente updateStudente(int matricola, Studente studente){
+    public Studente updateStudente(int matricola, StudenteDto studenteDto){
         Studente studenteDaAggiornare = getStudenteByMatricola(matricola);
 
-        studenteDaAggiornare.setNome(studente.getNome());
-        studenteDaAggiornare.setCognome(studente.getCognome());
-        studenteDaAggiornare.setDataNascita(studente.getDataNascita());
+        if(studenteDto.getAulaId()!=studenteDaAggiornare.getAula().getId()){
+            Aula aulaDaAggiornare = aulaService.getAulaById(studenteDto.getAulaId());
+
+            studenteDaAggiornare.setAula(aulaDaAggiornare);
+        }
+
+        studenteDaAggiornare.setNome(studenteDto.getNome());
+        studenteDaAggiornare.setCognome(studenteDto.getCognome());
+        studenteDaAggiornare.setDataNascita(studenteDto.getDataNascita());
 
         return studenteRepository.save(studenteDaAggiornare);
 

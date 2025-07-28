@@ -18,4 +18,8 @@ public class Studente {
 
     @Column(name = "data_nascita")
     private LocalDate dataNascita;
+
+    @ManyToOne
+    @JoinColumn(name = "aula_fk")
+    private Aula aula;
 }
