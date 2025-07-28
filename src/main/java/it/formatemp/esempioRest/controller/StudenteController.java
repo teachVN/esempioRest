@@ -30,8 +30,13 @@ public class StudenteController {
         return studenteService.getAllStudenti();
     }
 
-    @PutMapping("/studenti")
-    public Studente updateStudente(int matricola, Studente studente){
+    @PutMapping("/studenti/{matricola}")
+    public Studente updateStudente(@PathVariable int matricola, @RequestBody Studente studente){
         return studenteService.updateStudente(matricola, studente);
+    }
+
+    @DeleteMapping("/studenti/{matricola}")
+    public String deleteStudente(@PathVariable int matricola){
+        return studenteService.deleteStudente(matricola);
     }
 }
